@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage("Clean Workspace") {
+            steps {
+                cleanWs()
+            }
+        } 
         stage("Build") {
             agent {
                 label "Build"
@@ -57,10 +62,5 @@ pipeline {
                 }
             }
         }
-        stage("Clean Workspace") {
-            steps {
-                cleanWs()
-            }
-        } 
     }
 }
