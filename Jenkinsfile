@@ -1,11 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage("Clean Workspace") {
-            steps {
-                cleanWs()
-            }
-        } 
         stage("Build") {
             agent {
                 label "Build"
@@ -19,7 +14,6 @@ pipeline {
                 sh '''
                 sudo docker run -dit --name MYCONTAINER_$BUILD_NUMBER -p 80:80 newcontainer:v$BUILD_NUMBER 
                 sudo docker ps -a
-                sudo docker exec it newcontainer:v$BUILD_NUMBER java --version
                 '''
                 sh 'sudo curl http://localhost:80'
             }
@@ -62,7 +56,7 @@ pipeline {
                 }
             }
         }
-        stage("Clean Workspace At the end") {
+        stage("Clean Workspace") {
             steps {
                 cleanWs()
             }
