@@ -56,6 +56,9 @@ pipeline {
                     echo "Test job is failed"
                 }
             }
+        }
+        stage("Clean Workspace") {
+            cleanWs()
         } 
     }
 }
