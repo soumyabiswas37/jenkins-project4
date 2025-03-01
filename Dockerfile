@@ -1,7 +1,5 @@
 FROM centos:7
 
-RUN yum update -y
-
 RUN yum install java -y
 
 RUN yum install httpd -y
