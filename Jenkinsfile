@@ -12,7 +12,7 @@ pipeline {
                 sh 'sudo docker build -t newcontainer:v$BUILD_NUMBER .'
                 sh 'sudo docker images'
                 sh '''
-                sudo docker run -dit --name MYCONTAINER_$BUILD_NUMBER -p 80:80 newcontainer:v$BUILD_NUMBER 
+                sudo docker run -d --name MYCONTAINER_$BUILD_NUMBER -p 80:80 newcontainer:v$BUILD_NUMBER 
                 sudo docker ps -a
                 '''
                 sh 'sudo curl http://localhost:80'
@@ -42,7 +42,7 @@ pipeline {
                 sh 'sudo docker build -t newcontainer:v$BUILD_NUMBER .'
                 sh 'sudo docker images'
                 sh '''
-                sudo docker run -dit --name MYCONTAINER_$BUILD_NUMBER -p 80:80 newcontainer:v$BUILD_NUMBER 
+                sudo docker run -d --name MYCONTAINER_$BUILD_NUMBER -p 80:80 newcontainer:v$BUILD_NUMBER 
                 sudo docker ps -a
                 '''
                 sh 'sudo curl http://localhost:80'
@@ -58,8 +58,10 @@ pipeline {
         }
         stage("Clean Workspace") {
             steps {
-                always {
-                    cleanWs()
+                post {
+                    always {
+                        cleanWs()
+                    }
                 }
             }
         }
