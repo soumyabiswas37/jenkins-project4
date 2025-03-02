@@ -1,7 +1,5 @@
-FROM soumyabiswas37/container_java_ssh_httpd:v2
+FROM httpd:latest
 
-COPY index.html /var/www/html/index.html
-
-CMD ["/usr/sbin/httpd"]
+COPY index.html /usr/local/apache2/htdocs/
 
 EXPOSE 80
