@@ -15,7 +15,7 @@ pipeline {
                 sudo docker run -d --name MYCONTAINER_$BUILD_NUMBER -p 8$BUILD_NUMBER:80 newcontainer:v$BUILD_NUMBER 
                 sudo docker ps -a
                 '''
-                sh 'sudo curl http://localhost:80'
+                sh 'sudo curl http://localhost:8$BUILD_NUMBER'
             }
             post {
                 success {
@@ -45,7 +45,7 @@ pipeline {
                 sudo docker run -d --name MYCONTAINER_$BUILD_NUMBER -p 80:80 newcontainer:v$BUILD_NUMBER 
                 sudo docker ps -a
                 '''
-                sh 'sudo curl http://localhost:80'
+                sh 'sudo curl http://localhost:8$BUILD_NUMBER'
             }
             post {
                 success {
