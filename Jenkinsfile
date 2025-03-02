@@ -12,7 +12,7 @@ pipeline {
                 sh 'sudo docker build -t newcontainer:v$BUILD_NUMBER .'
                 sh 'sudo docker images'
                 sh '''
-                sudo docker run -d --name MYCONTAINER_$BUILD_NUMBER -p 80:80 newcontainer:v$BUILD_NUMBER 
+                sudo docker run -d --name MYCONTAINER_$BUILD_NUMBER -p 8$BUILD_NUMBER:80 newcontainer:v$BUILD_NUMBER 
                 sudo docker ps -a
                 '''
                 sh 'sudo curl http://localhost:80'
@@ -56,14 +56,22 @@ pipeline {
                 }
             }
         }
-        stage("Clean Workspace") {
-            steps {
-                post {
-                    always {
+        stage("Parallel Cleanup") {
+            parallel {
+                stage("Cleanup Workspace Agent1") {
+                    agent {label "Build"}
+                    steps {
+                        cleanWs()
+                    }
+                }
+                stage("Clean Workspace Agent2") {
+                    agent {label "Test"}
+                    steps {
                         cleanWs()
                     }
                 }
             }
         }
+
     }
 }
